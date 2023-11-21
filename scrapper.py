@@ -2,10 +2,12 @@ import requests
 import stem
 from stem import Signal
 from stem.control import Controller
+from link_extract import extract_href_links
+
 
 # Set the proxy to Tor
 session = requests.session()
-session.proxies = {"http":"socks5h://localhost:9050", "https": "socks5h://localhost:9050"}
+# session.proxies = {"http":"socks5h://localhost:9050", "https": "socks5h://localhost:9050"}
 
 def renew_connection():
     with Controller.from_port(port=9051) as controller:
@@ -13,13 +15,19 @@ def renew_connection():
         controller.signal(Signal.NEWNYM)
 
 # Example usage
-def scrape_example():
+def scrape_example(link):
     # Change the Tor IP address
-    renew_connection()
+    # renew_connection()
 
     # Make a request through Tor
-    response = session.get("http://s4k4ceiapwwgcm3mkb6e4diqecpo7kvdnfr5gg7sph7jjppqkvwwqtyd.onion")
+    response = session.get(link)
     print(response.text)
 
-if __name__ == "__main__":
-    scrape_example()
+def ahmia_links(keyword):
+    response = session.get(f"https://ahmia.fi/search/?q={keyword}")
+   
+    links=extract_href_links(response.text)
+    print(links[20].split(sep='redirect_url=')[1])
+    # scrape_example()
+
+ahmia_links('wiki')
