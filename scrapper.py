@@ -18,6 +18,8 @@ def renew_connection():
 
 
 def scrape(link):
+
+def scrape(link):
     # Change the Tor IP address
     # renew_connection()
 
