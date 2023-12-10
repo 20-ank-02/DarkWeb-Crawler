@@ -4,7 +4,7 @@ import csv
 # 20ankityadav02
 
 # mongodb://localhost:27017/capstone
-# CONNECTION_STRING = "mongodb+srv://20ankityadav02:256ZxCpwWcrEMe9N@clustercp.w9c49f9.mongodb.net/?retryWrites=true&w=majority"
+
 CONNECTION_STRING_LOCAL="mongodb://localhost:27017/capstone"
 def put_data(url,label,text):
    client = MongoClient(CONNECTION_STRING_LOCAL)
