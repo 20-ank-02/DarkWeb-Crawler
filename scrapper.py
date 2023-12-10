@@ -16,9 +16,6 @@ def renew_connection():
         controller.authenticate("pass")
         controller.signal(Signal.NEWNYM)
 
-
-def scrape(link):
-
 def scrape(link):
     # Change the Tor IP address
     # renew_connection()
