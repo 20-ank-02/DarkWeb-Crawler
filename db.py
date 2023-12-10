@@ -1,7 +1,6 @@
 from pymongo import MongoClient
 import csv
-# 256ZxCpwWcrEMe9N
-# 20ankityadav02
+
 
 # mongodb://localhost:27017/capstone
 
