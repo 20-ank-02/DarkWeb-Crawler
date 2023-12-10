@@ -9,13 +9,7 @@ def extract_href_links(html_content):
     # print(soup.get_text()) #returns all the text
     return links
 
-# # Example usage:
-# url = 'https://example.com'
-# response = requests.get(url)
-# html_content = response.text
-
-# href_links = extract_href_links(html_content)
-
-# print("Extracted HREF links:")
-# for link in href_links:
-#     print(link)
+def get_html_text(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    return soup.get_text()
+    

@@ -1,8 +1,10 @@
-import requests
 import stem
+import requests
 from stem import Signal
+from inference import classify
+from db import put_data,create_csv
 from stem.control import Controller
-from link_extract import extract_href_links
+from link_extract import extract_href_links,get_html_text
 
 
 # Set the proxy to Tor
@@ -14,20 +16,32 @@ def renew_connection():
         controller.authenticate("pass")
         controller.signal(Signal.NEWNYM)
 
-# Example usage
-def scrape_example(link):
+
+def scrape(link):
     # Change the Tor IP address
     # renew_connection()
 
     # Make a request through Tor
     response = session.get(link)
-    print(response.text)
+    
+    text=get_html_text(response.text)
+    # label=classify(text)
+    put_data(link,"label",text)
+    links=extract_href_links(response.text)
+    for link in links:
+        scrape(link)
+    
+    
 
 def ahmia_links(keyword):
     response = session.get(f"https://ahmia.fi/search/?q={keyword}")
    
     links=extract_href_links(response.text)
-    print(links[20].split(sep='redirect_url=')[1])
-    # scrape_example()
+    i=0
+    for link in links:
+        if i>9:
+            scrape(link.split(sep="redirect_url=")[1])
+        i+=1
 
-ahmia_links('wiki')
+
+ahmia_links('card')
