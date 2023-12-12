@@ -3,7 +3,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from stem import Signal
-#from inference import classify
+from inference import classify_pytorch
 from db import put_data,create_csv
 from stem.control import Controller
 from link_extract import extract_href_links,get_html_text
@@ -42,9 +42,9 @@ def scrape(link):
         print("Url error for: ",str(errorLink))
         return 
     text=get_html_text(response.text)
-    
-    # label=classify(text)
-    create_csv(text,"card-fraud")
+    text=text.replace()
+    label=classify_pytorch(text)
+    # create_csv(text,"card-fraud")
     #links=extract_href_links(response.text)
     #for link in links:
         #scrape(link)
