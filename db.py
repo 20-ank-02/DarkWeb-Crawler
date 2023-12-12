@@ -1,10 +1,9 @@
 from pymongo import MongoClient
 import csv
-# 256ZxCpwWcrEMe9N
-# 20ankityadav02
+import os
 
 # mongodb://localhost:27017/capstone
-# CONNECTION_STRING = "mongodb+srv://20ankityadav02:256ZxCpwWcrEMe9N@clustercp.w9c49f9.mongodb.net/?retryWrites=true&w=majority"
+
 CONNECTION_STRING_LOCAL="mongodb://localhost:27017/capstone"
 def put_data(url,label,text):
    client = MongoClient(CONNECTION_STRING_LOCAL)
@@ -19,18 +18,21 @@ def put_data(url,label,text):
    
    collection.insert_one(data)
    
-def create_csv(text,label):
-   fieldnames = ['text', 'class']
-   file_path = "output.csv"
-   with open(file_path, "a") as file:
-      writer = csv.DictWriter(file, fieldnames=fieldnames)
-      writer.writeheader()
-      writer.writerow({'text': text, 'class': label})
-    
+def create_csv(text, label):
+    file_path = "output.csv"
+    fieldnames = ['text', 'class']
+
+    if not os.path.exists(file_path):  # Fix the path checking
+        with open(file_path, "w", newline='') as file:  # Use 'w' to create a new file
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerow({'text': text, 'class': label})
+    else:
+        with open(file_path, "a", newline='') as file:  # Use 'a' to append to an existing file
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writerow({'text': text, 'class': label})
 
    
 
 if __name__ == "__main__":   
    create_csv('this is a card fraud website','card-fraud')
-
-    
