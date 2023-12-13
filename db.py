@@ -22,8 +22,8 @@ def create_csv(text, label):
     file_path = "output.csv"
     fieldnames = ['text', 'class']
 
-    if not os.path.exists(file_path):  # Fix the path checking
-        with open(file_path, "w", newline='') as file:  # Use 'w' to create a new file
+    if not os.path.exists(file_path):  
+        with open(file_path, "w", newline='') as file:  
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writeheader()
             writer.writerow({'text': text, 'class': label})
