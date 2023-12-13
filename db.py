@@ -8,7 +8,7 @@ CONNECTION_STRING_LOCAL="mongodb://localhost:27017/capstone"
 def put_data(url,label,text):
    client = MongoClient(CONNECTION_STRING_LOCAL)
    db=client['capstone']
-   collection=db["cardFraud"]
+   collection=db[label]
 
    data={
             "url":url,
